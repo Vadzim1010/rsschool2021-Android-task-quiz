@@ -3,7 +3,7 @@ package com.rsschool.quiz
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rsschool.quiz.data.DataManager
-import com.rsschool.quiz.fragments.FragmentQuestions
+import com.rsschool.quiz.fragments.FragmentQuiz
 import com.rsschool.quiz.fragments.FragmentResult
 import com.rsschool.quiz.listeners.BackButtonListener
 import com.rsschool.quiz.listeners.NextButtonListener
@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startFragmentQuestions(dataManager.getRadioButtonNumber(0))
+        startFragmentQuiz(dataManager.getRadioButtonNumber(0))
     }
 
-    private fun startFragmentQuestions(radioButtonNumber: Int) {
-        val fragmentQuestions = FragmentQuestions.newInstance(radioButtonNumber)
+    private fun startFragmentQuiz(radioButtonNumber: Int) {
+        val fragmentQuestions = FragmentQuiz.newInstance(radioButtonNumber)
         fragmentQuestions.setBackButtonListener(this)
         fragmentQuestions.setNextButtonListener(this)
         supportFragmentManager.beginTransaction()
@@ -40,20 +40,20 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
     override fun onBackButtonListener(pageNumber: Int, radioButtonNumber: Int) {
         dataManager.saveRadioButtonNumber(pageNumber, radioButtonNumber)
         return when (pageNumber) {
-            1 -> startFragmentQuestions(dataManager.getRadioButtonNumber(0))
-            2 -> startFragmentQuestions(dataManager.getRadioButtonNumber(1))
-            3 -> startFragmentQuestions(dataManager.getRadioButtonNumber(2))
-            else -> startFragmentQuestions(dataManager.getRadioButtonNumber(3))
+            1 -> startFragmentQuiz(dataManager.getRadioButtonNumber(0))
+            2 -> startFragmentQuiz(dataManager.getRadioButtonNumber(1))
+            3 -> startFragmentQuiz(dataManager.getRadioButtonNumber(2))
+            else -> startFragmentQuiz(dataManager.getRadioButtonNumber(3))
         }
     }
 
     override fun onNextButtonListener(pageNumber: Int, radioButtonNumber: Int) {
         dataManager.saveRadioButtonNumber(pageNumber, radioButtonNumber)
         return when (pageNumber) {
-            0 -> startFragmentQuestions(dataManager.getRadioButtonNumber(1))
-            1 -> startFragmentQuestions(dataManager.getRadioButtonNumber(2))
-            2 -> startFragmentQuestions(dataManager.getRadioButtonNumber(3))
-            3 -> startFragmentQuestions(dataManager.getRadioButtonNumber(4))
+            0 -> startFragmentQuiz(dataManager.getRadioButtonNumber(1))
+            1 -> startFragmentQuiz(dataManager.getRadioButtonNumber(2))
+            2 -> startFragmentQuiz(dataManager.getRadioButtonNumber(3))
+            3 -> startFragmentQuiz(dataManager.getRadioButtonNumber(4))
             else -> startFragmentResult(dataManager.getResult(), dataManager.getAnswers())
 
         }
@@ -61,6 +61,6 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
 
     override fun onStartOverButtonListener() {
         dataManager.clearAll()
-        startFragmentQuestions(dataManager.getRadioButtonNumber(0))
+        startFragmentQuiz(dataManager.getRadioButtonNumber(0))
     }
 }
