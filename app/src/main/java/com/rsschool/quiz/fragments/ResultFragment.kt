@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.R
 import com.rsschool.quiz.data.DataManager
@@ -33,8 +34,8 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val result = arguments?.getInt(RESULT) ?: 0
-        val answers = arguments?.getStringArrayList(ANSWERS) ?: arrayListOf("", "", "", "", "")
+        val result = arguments?.getInt(KEY_RESULT) ?: 0
+        val answers = arguments?.getStringArrayList(KEY_ANSWERS) ?: arrayListOf("", "", "", "", "")
 
         val resultString = "Your result: ${result}/5"
         binding.result.text = resultString
@@ -91,14 +92,15 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
         fun newInstance(result: Int, answers: ArrayList<String>): ResultFragment {
             val fragment = ResultFragment()
-            val args = Bundle()
-            args.putInt(RESULT, result)
-            args.putStringArrayList(ANSWERS, answers)
-            fragment.arguments = args
+            val bundle = bundleOf(
+                KEY_RESULT to result,
+                KEY_ANSWERS to answers
+            )
+            fragment.arguments = bundle
             return fragment
         }
 
-        private const val RESULT = "RESULT"
-        private const val ANSWERS = "ANSWERS"
+        private const val KEY_RESULT = "KEY_RESULT"
+        private const val KEY_ANSWERS = "KEY_ANSWERS"
     }
 }

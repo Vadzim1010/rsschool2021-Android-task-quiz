@@ -2,6 +2,7 @@ package com.rsschool.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.commit
 import com.rsschool.quiz.data.DataManager
 import com.rsschool.quiz.fragments.QuizFragment
 import com.rsschool.quiz.fragments.ResultFragment
@@ -24,17 +25,17 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
         val quizFragment = QuizFragment.newInstance(radioButtonNumber)
         quizFragment.setBackButtonListener(this)
         quizFragment.setNextButtonListener(this)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, quizFragment)
-            .commit()
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, quizFragment)
+        }
     }
 
     private fun startResultFragment(result: Int, answers: ArrayList<String>) {
         val resultFragment = ResultFragment.newInstance(result, answers)
         resultFragment.setStartOverButtonListener(this)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, resultFragment)
-            .commit()
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, resultFragment)
+        }
     }
 
     override fun onBackButtonListener(pageNumber: Int, radioButtonNumber: Int) {
@@ -55,7 +56,6 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
             2 -> startQuizFragment(dataManager.getRadioButtonNumber(3))
             3 -> startQuizFragment(dataManager.getRadioButtonNumber(4))
             else -> startResultFragment(dataManager.getResult(), dataManager.getAnswers())
-
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.R
 import com.rsschool.quiz.data.DataManager
@@ -51,8 +52,8 @@ class QuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val radioButtonNumber = arguments?.getInt(RADIO_BUTTON_ID) ?: -1
 
+        val radioButtonNumber = arguments?.getInt(KEY_RADIO_BUTTON_NUMBER) ?: -1
 
         setPageQuestion(pageNumber)
         checkRadioButton(radioButtonNumber)
@@ -197,15 +198,16 @@ class QuizFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(radioButtonId: Int): QuizFragment {
+        fun newInstance(radioButtonNumber: Int): QuizFragment {
             val fragment = QuizFragment()
-            val args = Bundle()
-            args.putInt(RADIO_BUTTON_ID, radioButtonId)
-            fragment.arguments = args
+            val bundle = bundleOf(
+                KEY_RADIO_BUTTON_NUMBER to radioButtonNumber
+            )
+            fragment.arguments = bundle
             return fragment
         }
 
-        private const val RADIO_BUTTON_ID = "RADIO_BUTTON_ID"
+        private const val KEY_RADIO_BUTTON_NUMBER = "KEY_RADIO_BUTTON_ID"
         private var pageNumber: Int = 0
     }
 }
