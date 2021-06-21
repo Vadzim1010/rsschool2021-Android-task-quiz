@@ -21,11 +21,11 @@ class DataManager {
         val listOfAnswers = arrayListOf("", "", "", "", "")
         for (i in listOfData.indices) {
             when (listOfData[i]) {
-                1 -> listOfAnswers[i] = questionItems[i].answer1
-                2 -> listOfAnswers[i] = questionItems[i].answer2
-                3 -> listOfAnswers[i] = questionItems[i].answer3
-                4 -> listOfAnswers[i] = questionItems[i].answer4
-                5 -> listOfAnswers[i] = questionItems[i].answer5
+                1 -> listOfAnswers[i] = questionItems[i].option1
+                2 -> listOfAnswers[i] = questionItems[i].option2
+                3 -> listOfAnswers[i] = questionItems[i].option3
+                4 -> listOfAnswers[i] = questionItems[i].option4
+                5 -> listOfAnswers[i] = questionItems[i].option5
             }
         }
         return listOfAnswers
@@ -49,11 +49,11 @@ class DataManager {
 
 data class ListItem(
     val question: String,
-    val answer1: String,
-    val answer2: String,
-    val answer3: String,
-    val answer4: String,
-    val answer5: String,
+    val option1: String,
+    val option2: String,
+    val option3: String,
+    val option4: String,
+    val option5: String,
     val numberOfCorrectAnswer: Int,
 )
 

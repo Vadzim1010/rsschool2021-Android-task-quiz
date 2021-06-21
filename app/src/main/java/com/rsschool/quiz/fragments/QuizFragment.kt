@@ -146,11 +146,11 @@ class QuizFragment : Fragment() {
                 nextButton.text = getString(R.string.submit)
             }
             question.text = questions.question
-            optionOne.text = questions.answer1
-            optionTwo.text = questions.answer2
-            optionThree.text = questions.answer3
-            optionFour.text = questions.answer4
-            optionFive.text = questions.answer5
+            optionOne.text = questions.option1
+            optionTwo.text = questions.option2
+            optionThree.text = questions.option3
+            optionFour.text = questions.option4
+            optionFive.text = questions.option5
             toolbar.title = "Question ${pageNumber + 1}"
         }
     }
