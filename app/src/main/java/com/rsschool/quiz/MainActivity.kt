@@ -3,8 +3,8 @@ package com.rsschool.quiz
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.rsschool.quiz.data.DataManager
-import com.rsschool.quiz.fragments.FragmentQuiz
-import com.rsschool.quiz.fragments.FragmentResult
+import com.rsschool.quiz.fragments.QuizFragment
+import com.rsschool.quiz.fragments.ResultFragment
 import com.rsschool.quiz.listeners.BackButtonListener
 import com.rsschool.quiz.listeners.NextButtonListener
 import com.rsschool.quiz.listeners.StartOverButtonListener
@@ -17,50 +17,50 @@ class MainActivity : AppCompatActivity(), BackButtonListener, NextButtonListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startFragmentQuiz(dataManager.getRadioButtonNumber(0))
+        startQuizFragment(dataManager.getRadioButtonNumber(0))
     }
 
-    private fun startFragmentQuiz(radioButtonNumber: Int) {
-        val fragmentQuestions = FragmentQuiz.newInstance(radioButtonNumber)
-        fragmentQuestions.setBackButtonListener(this)
-        fragmentQuestions.setNextButtonListener(this)
+    private fun startQuizFragment(radioButtonNumber: Int) {
+        val quizFragment = QuizFragment.newInstance(radioButtonNumber)
+        quizFragment.setBackButtonListener(this)
+        quizFragment.setNextButtonListener(this)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragmentQuestions)
+            .replace(R.id.fragment_container, quizFragment)
             .commit()
     }
 
-    private fun startFragmentResult(result: Int, answers: ArrayList<String>) {
-        val fragmentResult = FragmentResult.newInstance(result, answers)
-        fragmentResult.setStartOverButtonListener(this)
+    private fun startResultFragment(result: Int, answers: ArrayList<String>) {
+        val resultFragment = ResultFragment.newInstance(result, answers)
+        resultFragment.setStartOverButtonListener(this)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragmentResult)
+            .replace(R.id.fragment_container, resultFragment)
             .commit()
     }
 
     override fun onBackButtonListener(pageNumber: Int, radioButtonNumber: Int) {
         dataManager.saveRadioButtonNumber(pageNumber, radioButtonNumber)
         return when (pageNumber) {
-            1 -> startFragmentQuiz(dataManager.getRadioButtonNumber(0))
-            2 -> startFragmentQuiz(dataManager.getRadioButtonNumber(1))
-            3 -> startFragmentQuiz(dataManager.getRadioButtonNumber(2))
-            else -> startFragmentQuiz(dataManager.getRadioButtonNumber(3))
+            1 -> startQuizFragment(dataManager.getRadioButtonNumber(0))
+            2 -> startQuizFragment(dataManager.getRadioButtonNumber(1))
+            3 -> startQuizFragment(dataManager.getRadioButtonNumber(2))
+            else -> startQuizFragment(dataManager.getRadioButtonNumber(3))
         }
     }
 
     override fun onNextButtonListener(pageNumber: Int, radioButtonNumber: Int) {
         dataManager.saveRadioButtonNumber(pageNumber, radioButtonNumber)
         return when (pageNumber) {
-            0 -> startFragmentQuiz(dataManager.getRadioButtonNumber(1))
-            1 -> startFragmentQuiz(dataManager.getRadioButtonNumber(2))
-            2 -> startFragmentQuiz(dataManager.getRadioButtonNumber(3))
-            3 -> startFragmentQuiz(dataManager.getRadioButtonNumber(4))
-            else -> startFragmentResult(dataManager.getResult(), dataManager.getAnswers())
+            0 -> startQuizFragment(dataManager.getRadioButtonNumber(1))
+            1 -> startQuizFragment(dataManager.getRadioButtonNumber(2))
+            2 -> startQuizFragment(dataManager.getRadioButtonNumber(3))
+            3 -> startQuizFragment(dataManager.getRadioButtonNumber(4))
+            else -> startResultFragment(dataManager.getResult(), dataManager.getAnswers())
 
         }
     }
 
     override fun onStartOverButtonListener() {
         dataManager.clearAll()
-        startFragmentQuiz(dataManager.getRadioButtonNumber(0))
+        startQuizFragment(dataManager.getRadioButtonNumber(0))
     }
 }

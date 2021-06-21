@@ -13,12 +13,11 @@ import com.rsschool.quiz.databinding.FragmentResultBinding
 import com.rsschool.quiz.listeners.StartOverButtonListener
 
 
-class FragmentResult : Fragment(R.layout.fragment_result) {
+class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
     private var onStartOverButtonListener: StartOverButtonListener? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +36,7 @@ class FragmentResult : Fragment(R.layout.fragment_result) {
         val result = arguments?.getInt(RESULT) ?: 0
         val answers = arguments?.getStringArrayList(ANSWERS) ?: arrayListOf("", "", "", "", "")
 
-        val resultString = "Your result: ${result.toString()}/5"
+        val resultString = "Your result: ${result}/5"
         binding.result.text = resultString
 
         binding.startOverButton.setOnClickListener {
@@ -64,7 +63,7 @@ class FragmentResult : Fragment(R.layout.fragment_result) {
     }
 
     private fun getAnswers(result: Int, answers: ArrayList<String>): String {
-        var answersString = "Your result: ${result.toString()}/5\n\n"
+        var answersString = "Your result: ${result}/5\n\n"
         for (i in 0 until answers.size) {
             answersString += "${i + 1}) " + DataManager().getQuestion(i).question + "\n" + "Your answer: " + answers[i] + "\n\n"
         }
@@ -90,8 +89,8 @@ class FragmentResult : Fragment(R.layout.fragment_result) {
 
     companion object {
 
-        fun newInstance(result: Int, answers: ArrayList<String>): FragmentResult {
-            val fragment = FragmentResult()
+        fun newInstance(result: Int, answers: ArrayList<String>): ResultFragment {
+            val fragment = ResultFragment()
             val args = Bundle()
             args.putInt(RESULT, result)
             args.putStringArrayList(ANSWERS, answers)

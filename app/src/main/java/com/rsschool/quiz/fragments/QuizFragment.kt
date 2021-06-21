@@ -14,7 +14,7 @@ import com.rsschool.quiz.databinding.FragmentQuizBinding
 import com.rsschool.quiz.listeners.BackButtonListener
 import com.rsschool.quiz.listeners.NextButtonListener
 
-class FragmentQuiz : Fragment() {
+class QuizFragment : Fragment() {
 
     private var _binding: FragmentQuizBinding? = null
     private val binding get() = _binding!!
@@ -141,6 +141,9 @@ class FragmentQuiz : Fragment() {
                 toolbar.isEnabled = false
                 toolbar.navigationIcon = null
             }
+            if (pageNumber == 4) {
+                nextButton.text = getString(R.string.submit)
+            }
             question.text = questions.question
             optionOne.text = questions.answer1
             optionTwo.text = questions.answer2
@@ -194,8 +197,8 @@ class FragmentQuiz : Fragment() {
 
     companion object {
 
-        fun newInstance(radioButtonId: Int): FragmentQuiz {
-            val fragment = FragmentQuiz()
+        fun newInstance(radioButtonId: Int): QuizFragment {
+            val fragment = QuizFragment()
             val args = Bundle()
             args.putInt(RADIO_BUTTON_ID, radioButtonId)
             fragment.arguments = args
